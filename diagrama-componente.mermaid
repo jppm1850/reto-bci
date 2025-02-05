@@ -1,0 +1,15 @@
+graph TB
+    Client[Cliente HTTP]
+    API[API REST Controller]
+    Service[Service Layer]
+    Repository[Repository Layer]
+    Database[(H2 Database)]
+    JWT[JWT Service]
+    Validator[Validation Service]
+
+    Client -->|HTTP Request| API
+    API -->|Validate| Validator
+    API -->|Process| Service
+    Service -->|Generate Token| JWT
+    Service -->|CRUD Operations| Repository
+    Repository -->|Persist/Retrieve| Database

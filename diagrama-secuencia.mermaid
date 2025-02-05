@@ -1,0 +1,36 @@
+sequenceDiagram
+    participant C as Client
+    participant A as API Controller
+    participant V as Validator
+    participant S as Service
+    participant R as Repository
+    participant D as Database
+    participant J as JWT Service
+
+    %% Sign-up flow
+    C->>+A: POST /sign-up
+    A->>+V: Validate Request
+    V-->>-A: Validation Result
+    A->>+S: Create User
+    S->>+R: Save User
+    R->>+D: Persist Data
+    D-->>-R: Confirm Save
+    R-->>-S: User Saved
+    S->>+J: Generate Token
+    J-->>-S: JWT Token
+    S-->>-A: User + Token
+    A-->>-C: Response
+
+    %% Login flow
+    C->>+A: GET /login
+    A->>+J: Validate Token
+    J-->>-A: Token Valid
+    A->>+S: Get User
+    S->>+R: Find User
+    R->>+D: Query Data
+    D-->>-R: User Data
+    R-->>-S: User Found
+    S->>+J: Generate New Token
+    J-->>-S: New JWT Token
+    S-->>-A: Updated User + Token
+    A-->>-C: Response

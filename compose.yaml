@@ -1,0 +1,28 @@
+version: "3.9"  # Use a recent version of Docker Compose
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080" # Map the container port to the host port
+    depends_on:
+      - db  # Ensure the database is running before the app
+    environment:
+      - SPRING_R2DBC_URL=r2dbc:h2:mem:///userdb;DB_CLOSE_DELAY=-1 # Use in memory db for docker example
+      - SPRING_R2DBC_USERNAME=sa
+      - SPRING_R2DBC_PASSWORD=
+      - JWT_SECRET=4qhq8LrEBfYcaRHxhdb9zURb2rf8e7Ud8GLO9L6brain2rvUKu7C # Consider using Docker secrets in production
+      - JWT_EXPIRATION=86400000
+    restart: always #restart if fail
+
+  db:
+    image: "oscarfonts/h2" # Use a pre-built H2 image for simplicity. For production, consider a persistent database.
+    ports:
+      - "8082:8082" # Optional: Expose the H2 console port.  Do not use this in production.
+    volumes: # Optional: Persist data outside the container (for a real database). For H2 and this example, it's not strictly needed.
+      - h2data:/data
+    environment:
+      - H2_OPTIONS=-tcp -webAllowOthers # Allows external connections. Do not use in production.
+
+volumes:
+  h2data: # Named volume for H2 data persistence (if you want to persist it)
