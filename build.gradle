@@ -1,17 +1,16 @@
 plugins {
 	id 'java'
 	id 'groovy'
-	id 'org.springframework.boot' version '3.4.2'
-	id 'io.spring.dependency-management' version '1.1.7'
+	id 'org.springframework.boot' version '2.5.14'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
 
 group = 'com.bci.reto'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
-	}
+	sourceCompatibility = JavaVersion.VERSION_11
+	targetCompatibility = JavaVersion.VERSION_11
 }
 
 repositories {
@@ -23,17 +22,18 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
-	implementation 'org.springdoc:springdoc-openapi-starter-webflux-ui:2.8.0'
+	// OpenAPI/Swagger
+	implementation 'org.springdoc:springdoc-openapi-webflux-ui:1.6.9'
 
+	// Base de datos
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'io.r2dbc:r2dbc-h2'
+
+	// Testing
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
 
 	// Lombok
 	compileOnly 'org.projectlombok:lombok'
@@ -43,20 +43,20 @@ dependencies {
 	implementation 'org.hibernate.validator:hibernate-validator'
 
 	// JWT
-	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
-	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
-	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2'
 
+	// Spock Framework y Groovy
+	testImplementation 'org.spockframework:spock-core:2.0-groovy-3.0'
+	testImplementation 'org.spockframework:spock-spring:2.0-groovy-3.0'
+	testImplementation 'org.codehaus.groovy:groovy:3.0.9'
+	testImplementation 'org.codehaus.groovy:groovy-all:3.0.9'
 
-	testImplementation 'org.spockframework:spock-core:2.3-groovy-4.0'
-	testImplementation 'org.spockframework:spock-spring:2.3-groovy-4.0'
-	testImplementation 'org.apache.groovy:groovy:4.0.9'
-	testImplementation 'org.apache.groovy:groovy-all:4.0.9'
+	// Utilidades para testing
 	testImplementation 'cglib:cglib-nodep:3.3.0'
-	testImplementation 'org.objenesis:objenesis:3.3'
-	testImplementation 'net.bytebuddy:byte-buddy:1.14.9'
-
-
+	testImplementation 'org.objenesis:objenesis:3.2'
+	testImplementation 'net.bytebuddy:byte-buddy:1.10.22'
 }
 
 test {
@@ -73,6 +73,9 @@ sourceSets {
 	test {
 		groovy {
 			srcDirs = ['src/test/groovy']
+		}
+		java {
+			srcDirs = []
 		}
 	}
 }

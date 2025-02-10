@@ -2,10 +2,10 @@ package com.bci.reto.service.service;
 
 import com.bci.reto.service.model.UserResponseDTO;
 import com.bci.reto.service.model.UserSignUpRequestDTO;
+import org.springframework.http.ResponseEntity;
 import reactor.core.publisher.Mono;
 
 public interface UserService {
-
-    Mono<UserResponseDTO> signUp(UserSignUpRequestDTO request);
-    Mono<UserResponseDTO> login(String token);
+    Mono<ResponseEntity<Object>> signUp(UserSignUpRequestDTO request);
+    Mono<ResponseEntity<UserResponseDTO>> login(String authHeader);
 }

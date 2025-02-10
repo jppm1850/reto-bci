@@ -1,7 +1,10 @@
 package com.bci.reto.service.model;
 
-public record PhoneResponseDTO(
-        Long number,
-        Integer citycode,
-        String contrycode
-) {}
+import lombok.Value;
+
+@Value
+public class PhoneResponseDTO {
+    Long number;
+    Integer citycode;
+    String contrycode;
+}

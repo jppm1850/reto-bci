@@ -1,27 +1,31 @@
-# Use a multi-stage build to reduce the final image size
-FROM gradle:8.3-jdk17 AS build
+# Dockerfile
+FROM openjdk:11-jdk-slim as build
 
 WORKDIR /app
 
-# Copy build files
-COPY gradle ./gradle
+# Copiar archivos del proyecto
 COPY gradlew .
-COPY settings.gradle .
+COPY gradle gradle
 COPY build.gradle .
+COPY settings.gradle .
+COPY src src
 
-# Resolve dependencies and build the application
-RUN ./gradlew build -x test
+# Dar permisos de ejecución al gradlew
+RUN chmod +x ./gradlew
 
-# Create a smaller image for the application
-FROM openjdk:17-alpine
+# Construir el proyecto
+RUN ./gradlew clean build -x test
+
+# Imagen final
+FROM openjdk:11-jre-slim
 
 WORKDIR /app
 
-# Copy the JAR file from the build stage
-COPY --from=build /app/build/libs/*.jar /app/app.jar
+# Copiar el jar construido
+COPY --from=build /app/build/libs/*.jar app.jar
 
-# Expose the port the application runs on (adjust if needed)
+# Puerto expuesto
 EXPOSE 8080
 
-# Set the startup command
-CMD ["java", "-jar", "app.jar"]
+# Comando para ejecutar la aplicación
+ENTRYPOINT ["java", "-jar", "app.jar"]

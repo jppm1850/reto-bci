@@ -1,6 +1,9 @@
 package com.bci.reto.service.exception;
 
-public sealed interface UserError
-        permits UserExistsException, UserNotFoundException {
+public interface UserError {
+    /**
+     * Obtiene el mensaje de error
+     * @return mensaje descriptivo del error
+     */
     String getMessage();
 }

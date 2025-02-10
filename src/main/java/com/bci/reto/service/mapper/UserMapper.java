@@ -9,6 +9,7 @@ import com.bci.reto.service.entity.User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class UserMapper {
@@ -19,9 +20,9 @@ public class UserMapper {
         }
 
         User user = new User();
-        user.setName(dto.name());
-        user.setEmail(dto.email());
-        user.setPassword(dto.password());
+        user.setName(dto.getName());
+        user.setEmail(dto.getEmail());
+        user.setPassword(dto.getPassword());
         return user;
     }
 
@@ -31,9 +32,9 @@ public class UserMapper {
         }
 
         Phone phone = new Phone();
-        phone.setNumber(dto.number());
-        phone.setCitycode(dto.citycode());
-        phone.setContrycode(dto.contrycode());
+        phone.setNumber(dto.getNumber());
+        phone.setCitycode(dto.getCitycode());
+        phone.setContrycode(dto.getContrycode());
         return phone;
     }
 
@@ -48,7 +49,7 @@ public class UserMapper {
                         phone.getCitycode(),
                         phone.getContrycode()
                 ))
-                .toList();
+                .collect(Collectors.toList());
 
         return new UserResponseDTO(
                 entity.getId(),
