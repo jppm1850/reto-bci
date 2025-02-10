@@ -8,9 +8,9 @@ Este microservicio proporciona endpoints para la gestión de usuarios, incluyend
 
 ## Requisitos
 
-- Java 17
+- Java 11
 - Gradle 7.4
-- Spring Boot 3.4.2
+- Spring Boot 2.5.14
 
 ## Características
 
