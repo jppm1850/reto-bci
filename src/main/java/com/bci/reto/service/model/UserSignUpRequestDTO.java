@@ -26,4 +26,5 @@ public class UserSignUpRequestDTO {
 
         @Schema(description = "Lista de teléfonos asociados al usuario")
         List<PhoneRequestDTO> phones;
+
 }
