@@ -17,11 +17,11 @@ public class UserSignUpRequestDTO {
         String email;
 
         @Pattern(
-                regexp = "^(?=.*[A-Z])(?=.*\\d.*\\d)(?=.*[a-z])[A-Za-z\\d]{8,12}$",
-                message = "La contraseña debe tener una letra mayúscula, exactamente dos números y tener entre 8 y 12 caracteres"
+                regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*\\d)(?!.*0.*1)(?!.*1.*2)(?!.*2.*3)(?!.*3.*4)(?!.*4.*5)(?!.*5.*6)(?!.*6.*7)(?!.*7.*8)(?!.*8.*9)[A-Za-z\\d]{8,12}$",
+                message = "La contraseña debe tener una letra mayúscula, exactamente dos números no consecutivos y tener entre 8 y 12 caracteres"
         )
-        @Schema(description = "Contraseña del usuario (Debe tener al menos una mayúscula y exactamente dos números)",
-                example = "Ab123456")
+        @Schema(description = "Contraseña del usuario (Debe tener al menos una mayúscula y exactamente dos números no consecutivos)",
+                example = "Ab1c2defg")
         String password;
 
         @Schema(description = "Lista de teléfonos asociados al usuario")
